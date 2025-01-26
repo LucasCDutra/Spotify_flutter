@@ -1,13 +1,20 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify_flutter/common/widgets/appbart/app_bar.dart';
 import 'package:spotify_flutter/common/widgets/buttons/basic_app_button.dart';
 import 'package:spotify_flutter/core/configs/assets/app_vectors.dart';
+import 'package:spotify_flutter/data/models/auth/create_user_request.dart';
+import 'package:spotify_flutter/domain/usecases/auth/signup.dart';
 import 'package:spotify_flutter/presentation/auth/pages/signin.dart';
+import 'package:spotify_flutter/presentation/root/pages/root.dart';
+import 'package:spotify_flutter/service_locator.dart';
 
 class SingupPage extends StatelessWidget {
-  const SingupPage({super.key});
+  SingupPage({super.key});
+
+  final TextEditingController _fullname = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +36,32 @@ class SingupPage extends StatelessWidget {
             const SizedBox(height: 20),
             _passwordField(context),
             const SizedBox(height: 20),
-            BasicAppButton(onPressed: () {}, title: 'Create Account'),
+            BasicAppButton(
+                onPressed: () async {
+                  var result = await sl<SignUpUseCase>().call(
+                    params: CreateUserReq(
+                      fullName: _fullname.text.toString(),
+                      email: _email.text.toString(),
+                      password: _password.text.toString(),
+                    ),
+                  );
+
+                  result.fold(
+                    (l) {
+                      var snackbar = SnackBar(content: Text(l));
+                      ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                    },
+                    (r) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) => const RootPage(),
+                          ),
+                          (root) => false);
+                    },
+                  );
+                },
+                title: 'Create Account'),
           ],
         ),
       ),
@@ -45,6 +77,7 @@ class SingupPage extends StatelessWidget {
 
   Widget _fullNameField(BuildContext context) {
     return TextField(
+      controller: _fullname,
       decoration: const InputDecoration(
         hintText: 'Full Name',
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -53,6 +86,7 @@ class SingupPage extends StatelessWidget {
 
   Widget _emailField(BuildContext context) {
     return TextField(
+      controller: _email,
       decoration: const InputDecoration(
         hintText: 'Enter Email',
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -61,6 +95,7 @@ class SingupPage extends StatelessWidget {
 
   Widget _passwordField(BuildContext context) {
     return TextField(
+      controller: _password,
       decoration: const InputDecoration(
         hintText: 'Password',
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
@@ -84,7 +119,7 @@ class SingupPage extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (BuildContext context) => const SinginPage()),
+                  MaterialPageRoute(builder: (BuildContext context) => SinginPage()),
                 );
               },
               child: const Text('Sign In'))

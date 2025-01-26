@@ -66,7 +66,7 @@ class SignupOrSigninpage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (BuildContext context) => const SingupPage()),
+                                MaterialPageRoute(builder: (BuildContext context) => SingupPage()),
                               );
                             },
                             title: 'Register'),
@@ -78,7 +78,7 @@ class SignupOrSigninpage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (BuildContext context) => const SinginPage()),
+                                MaterialPageRoute(builder: (BuildContext context) => SinginPage()),
                               );
                             },
                             child: Text(
