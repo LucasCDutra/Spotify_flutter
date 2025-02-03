@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:spotify_flutter/common/widgets/appbart/app_bar.dart';
@@ -7,7 +6,7 @@ import 'package:spotify_flutter/core/configs/assets/app_vectors.dart';
 import 'package:spotify_flutter/data/models/auth/singin_user_req.dart';
 import 'package:spotify_flutter/domain/usecases/auth/signin.dart';
 import 'package:spotify_flutter/presentation/auth/pages/signup.dart';
-import 'package:spotify_flutter/presentation/root/pages/root.dart';
+import 'package:spotify_flutter/presentation/home/pages/home.dart';
 import 'package:spotify_flutter/service_locator.dart';
 
 class SinginPage extends StatelessWidget {
@@ -53,7 +52,7 @@ class SinginPage extends StatelessWidget {
                     Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => const RootPage(),
+                          builder: (BuildContext context) => const HomePage(),
                         ),
                         (root) => false);
                   },

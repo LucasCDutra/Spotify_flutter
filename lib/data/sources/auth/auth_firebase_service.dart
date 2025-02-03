@@ -43,7 +43,7 @@ class AuthFirebaseServiceImp extends AuthFirebaseService {
         'email': data.user?.email,
       });
 
-      return Right('Signup was Successful');
+      return const Right('Signup was Successful');
     } on FirebaseAuthException catch (e) {
       String message = '';
       if (e.code == 'weak-password') {

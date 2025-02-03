@@ -15,7 +15,7 @@ class GetStartedPage extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
@@ -40,7 +40,7 @@ class GetStartedPage extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
-                SizedBox(height: 21),
+                const SizedBox(height: 21),
                 const Text(
                   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy",
                   textAlign: TextAlign.center,
@@ -50,7 +50,7 @@ class GetStartedPage extends StatelessWidget {
                     fontSize: 13,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 BasicAppButton(
                     onPressed: () {
                       Navigator.push(

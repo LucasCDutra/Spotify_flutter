@@ -6,7 +6,7 @@ import 'package:spotify_flutter/core/configs/assets/app_vectors.dart';
 import 'package:spotify_flutter/data/models/auth/create_user_request.dart';
 import 'package:spotify_flutter/domain/usecases/auth/signup.dart';
 import 'package:spotify_flutter/presentation/auth/pages/signin.dart';
-import 'package:spotify_flutter/presentation/root/pages/root.dart';
+import 'package:spotify_flutter/presentation/home/pages/home.dart';
 import 'package:spotify_flutter/service_locator.dart';
 
 class SingupPage extends StatelessWidget {
@@ -55,7 +55,7 @@ class SingupPage extends StatelessWidget {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (BuildContext context) => const RootPage(),
+                            builder: (BuildContext context) => const HomePage(),
                           ),
                           (root) => false);
                     },
