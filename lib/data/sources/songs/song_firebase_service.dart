@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:spotify_flutter/data/models/song/song.dart';
 import 'package:spotify_flutter/domain/entities/song/song.dart';
 
 abstract class SongFirebaseService {
   Future<Either> getNewsSongs();
   Future<Either> getPlayList();
+  Future<Either> addOrRemoveFavoriteSongs(String songId);
 }
 
 class SongFirebaseServiceImp extends SongFirebaseService {
@@ -41,6 +43,27 @@ class SongFirebaseServiceImp extends SongFirebaseService {
       }
 
       return Right(songs);
+    } catch (e) {
+      return const Left('An error occurred, Please try again.');
+    }
+  }
+
+  @override
+  Future<Either> addOrRemoveFavoriteSongs(String songId) async {
+    final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    try {
+      var user = await firebaseAuth.currentUser;
+
+      String uId = user!.uid;
+
+      QuerySnapshot favoriteSongs = await firebaseFirestore
+          .collection('Users')
+          .doc(uId)
+          .collection('Favorites')
+          .where('songId', isEqualTo: songId)
+          .get();
+      return right(favoriteSongs);
     } catch (e) {
       return const Left('An error occurred, Please try again.');
     }
